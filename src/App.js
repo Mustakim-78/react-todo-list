@@ -13,27 +13,28 @@ function App() {
   },[]);  
 
   useEffect(() => {
-    statushandler();
-    savetolocal();
+    switch(status)
+    {
+      case "completed":
+        setfilteredtodo(todoarray.filter(t => t.completed === true))
+        break;
+      case "uncompleted":
+        setfilteredtodo(todoarray.filter(t => t.completed === false))
+        break;
+      default:
+        setfilteredtodo(todoarray);
+        break;
+      }
+
+    localStorage.setItem("todos",JSON.stringify(todoarray));
     },[todoarray,status]);
 
-  function statushandler(){
-      switch(status)
-      {
-        case "completed":
-          setfilteredtodo(todoarray.filter(t => t.completed === true))
-          break;
-        case "uncompleted":
-          setfilteredtodo(todoarray.filter(t => t.completed === false))
-          break;
-        default:
-          setfilteredtodo(todoarray);
-          break;
-      }
-  }
-  function savetolocal(){
-      localStorage.setItem("todos",JSON.stringify(todoarray));
-  }
+  // function statushandler(){
+      
+  // }
+  // function savetolocal(){
+      
+  // }
   function getfromlocal(){
     if(localStorage.getItem("todos") === null)
       localStorage.setItem("todos",JSON.stringify([]));
